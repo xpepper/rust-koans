@@ -1,2 +1,6 @@
 target
 src/path_to_enlightenment.rs
+.idea/modules.xml
+.idea/rust-koans.iml
+.idea/vcs.xml
+.idea/workspace.xml
