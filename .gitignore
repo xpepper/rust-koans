@@ -4,3 +4,4 @@ src/path_to_enlightenment.rs
 .idea/rust-koans.iml
 .idea/vcs.xml
 .idea/workspace.xml
+.idea/git_toolbox_prj.xml
