@@ -70,9 +70,9 @@ fn array_filter() {
 #[test]
 fn array_filter_map() {
     let arr: [u8; 5] = [2, 1, 2, 1, 2];
-    let mut iterator = arr.iter().filter_map(|&x| if x == 1 { Some(__) } else { None });
-    assert!(iterator.next() == Some(3));
-    assert!(iterator.next() == Some(3));
+    let mut iterator = arr.iter().filter_map(|&x| if x == 1 { Some(3) } else { None });
+    assert_eq!(iterator.next(), Some(3));
+    assert_eq!(iterator.next(), Some(3));
     assert!(iterator.next().is_none());
 }
 
@@ -86,30 +86,33 @@ fn complex_array_filter_map() {
         } else {
             None
         });
-    assert!(iterator.next().unwrap() == __);
-    assert!(iterator.next().unwrap() == __);
+    assert_eq!(iterator.next().unwrap(), 2);
+    assert_eq!(iterator.next().unwrap(), 4);
     assert!(iterator.next().is_none());
 }
 
-// Arrays can also be iterated through using a for loop
+// // Arrays can also be iterated through using a for loop
 #[test]
 fn for_loops() {
     let arr: [u64; 3] = [1, 2, 3];
     let mut y: u64 = 1;
-    for x in &arr {
-        assert!(*x == y);
-        __
+    for x in arr {
+        assert_eq!(x, y);
+        y += 1
     }
 }
 
-// Let's try iterating over an array of strings to build a sentence
+// // Let's try iterating over an array of strings to build a sentence
 #[test]
 fn for_loops_two() {
-    let words: [&'static str; 3] = ["I", "love", "Rust"];
-    let mut sentence: String = String::new();
-    for word in words.iter() {
-        __
-    }
+    let words: [String; 3] = [String::from("I"), "love".parse().unwrap(), "Rust".parse().unwrap()];
+    let sentence: String;
+    sentence = words.join(" ");
+    // for word in words {
+    //     sentence.push_str(word);
+    //     sentence.push_str(" ")
+    // }
+    // sentence = sentence.trim().to_string();
     println!("{:?}", sentence);
-    assert!(sentence == "I love Rust".to_string());
+    assert_eq!(sentence, "I love Rust".to_string());
 }
