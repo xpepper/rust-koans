@@ -35,33 +35,33 @@ fn string_to_slice() {
     assert!(slice == "Can't stop me now");
 }
 //
-// // You can concat a &str to a String at the end
-// #[test]
-// fn strings_with_strs() {
-//     let hello = "Hello ".to_string();
-//     let world = "World";
-//
-//     assert!(hello + world == __);
-// }
-//
-// // But two Strings require a & to coerce the second String
-// #[test]
-// fn strings_with_strings() {
-//     let hello = "Hello ".to_string();
-//     let world = "World!".to_string();
-//
-//     let hello_world = __ + __;
-//     assert!(hello_world == "Hello World!")
-// }
-//
-// // Strings cannot be indexed as they are UTF-8 encoded
-// // Some UTF-8 characters can be multiple bytes long
-// // But you can access the string as chars and iterate from there using nth
-// #[test]
-// fn using_chars() {
-//     let string = "Anybody hungry?";
-//     assert!(string.chars().nth(2) == __.chars().nth(0));
-// }
+// You can concat a &str to a String at the end
+#[test]
+fn strings_with_strs() {
+    let hello = "Hello ".to_string();
+    let world = "World";
+
+    assert!(hello + world == "Hello World");
+}
+
+// But two Strings require a & to coerce the second String
+#[test]
+fn strings_with_strings() {
+    let hello = "Hello ".to_string();
+    let world = "World!".to_string();
+
+    let hello_world = hello + &world;
+    assert!(hello_world == "Hello World!")
+}
+
+// Strings cannot be indexed as they are UTF-8 encoded
+// Some UTF-8 characters can be multiple bytes long
+// But you can access the string as chars and iterate from there using nth
+#[test]
+fn using_chars() {
+    let string = "Anybody hungry?";
+    assert!(string.chars().nth(2) == __.chars().nth(0));
+}
 //
 // // You can get a slice of a string using slicing syntax
 // #[test]
