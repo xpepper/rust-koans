@@ -60,48 +60,48 @@ fn strings_with_strings() {
 #[test]
 fn using_chars() {
     let string = "Anybody hungry?";
-    assert!(string.chars().nth(2) == __.chars().nth(0));
+    assert!(string.chars().nth(2) == "y".chars().nth(0));
 }
-//
-// // You can get a slice of a string using slicing syntax
-// #[test]
-// fn slicing_the_string() {
-//     let string = "Boom";
-//     assert!(&string[0..2] == __);
-// }
-//
-// // However these are BYTE offsets not character offsets -
-// // rust will panic if you try and slice within a character boundary
-// #[test]
-// #[should_panic]
-// fn slicing_the_byte() {
-//     let dog = "忠犬ハチ公";
-//     let slice = &dog[0..2];
-// }
-//
-// // You can truncate Strings
-// #[test]
-// fn truncate_string() {
-//     let mut string = String::from("Hello World!");
-//     string.truncate(5);
-//     assert!(string == __);
-// }
-//
-// // You can pop Strings
-// #[test]
-// fn pop_string() {
-//     let mut string = String::from("Hello");
-//     string.pop();
-//     assert!(string == __);
-// }
-//
-// // You can insert and remove from a String (at byte position)
-// #[test]
-// fn insert_and_remove_into_string() {
-//     let mut string = String::from("Hello");
-//     string.insert(2, 'e');
-//     assert!(string == __);
-//
-//     string.remove(2);
-//     assert!(string == __);
-// }
+
+// You can get a slice of a string using slicing syntax
+#[test]
+fn slicing_the_string() {
+    let string = "Boom";
+    assert_eq!(&string[0..2], "Bo");
+}
+
+// However these are BYTE offsets not character offsets -
+// rust will panic if you try and slice within a character boundary
+#[test]
+#[should_panic]
+fn slicing_the_byte() {
+    let dog = "忠犬ハチ公";
+    let _slice = &dog[0..2];
+}
+
+// You can truncate Strings
+#[test]
+fn truncate_string() {
+    let mut string = String::from("Hello World!");
+    string.truncate(5);
+    assert!(string == "Hello");
+}
+
+// You can pop Strings
+#[test]
+fn pop_string() {
+    let mut string = String::from("Hello");
+    let _o = string.pop();
+    assert_eq!(string, "Hell");
+}
+
+// You can insert and remove from a String (at byte position)
+#[test]
+fn insert_and_remove_into_string() {
+    let mut string = String::from("Hello");
+    string.insert(2, 'e');
+    assert!(string == "Heello");
+
+    string.remove(2);
+    assert!(string == "Hello");
+}
