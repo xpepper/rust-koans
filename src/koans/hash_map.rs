@@ -98,16 +98,18 @@ fn iterating_2() {
     map.insert(1, 1);
     map.insert(2, 4);
     map.insert(3, 9);
-    for __ in &map {
-        assert_eq!(__, value);
+    for (k, v) in &map {
+        assert_eq!(&(map[k]), v);
     }
 }
-
+//
 // If we no longer need the content of a HashMap, it can be cleared and reused
 #[test]
 fn clearing() {
     let mut map = HashMap::new();
     map.insert("chairs", 30);
     map.insert("tables", 8);
+    map.clear();
     assert_eq!(map.get("chairs"), None);
+    assert_eq!(map.get("tables"), None);
 }
