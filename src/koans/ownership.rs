@@ -48,9 +48,8 @@ fn copying_a_value() {
 // Its value is entirely self-contained and can be safely copied.
 #[test]
 fn copying_a_value_2() {
-    let mut num: i32 = 12;
+    let num: i32 = 12;
     let x = num;
-    num = 42;
     assert_eq!(x, 12);
 }
 
@@ -61,83 +60,84 @@ fn copying_a_value_2() {
 fn rebinding_a_vec() {
     let list = vec!["Rust", "Go", "C++"];
     let languages = list;
-    assert_eq!(list[0], "Rust");
+    assert_eq!(languages[0], "Rust");
 }
-//
-// // Now that you've learned a bit about ownership in Rust, it's time to look at borrowing.
-// // When a binding "borrows" a value, it creates a reference to that value.
-//
-// // One way to denote a reference to a value in Rust is using the & operator.
-// #[test]
-// fn simple_borrowing() {
-//     let name = String::from("Chris");
-//     let first_name = &name;
-//     assert_eq!(__, "Chris".to_string());
-//     assert_eq!(__, &"Chris".to_string());
-// }
-// // Unlike our earlier example, name has not been deallocated,
-// // because first_name has created a reference to it.
-//
-// // By default, references will be immutable unless you explicitly made mutable.
-// #[test]
-// fn mutable_borrowing() {
-//     let mut count = 10;
-//     {
-//         let new_count = &count;
-//         *new_count += 1;
-//         assert_eq!(new_count, &11);
-//     }
-//     assert_eq!(count, 11);
-// }
-//
-// // Borrowing can also be used to pass values through functions without needing to rebind them.
-// #[test]
-// fn borrowing_through_functions() {
-//     let mut vector = vec![1, 2, 3];
-//
-//     fn insert_next_number(v: Vec<i32>) {
-//         let x = v.last().unwrap() + 1;
-//         v.push(x);
-//     }
-//
-//     insert_next_number(vector);
-//
-//     assert_eq!(vector, vec![1, 2, 3, 4]);
-// }
-//
-// // Up until now, we've talked about things being cleaned up or deallocated,
-// // but we've avoided discussing lifetimes explicitly. That's because in most cases,
-// // Rust takes care of lifetimes for us.
-// #[test]
-// fn implicit_lifetime() {
-//     let x = 10;
-//     let y = 10;
-//
-//     fn add(a: i32, b: i32) -> i32 {
-//         a + b
-//     }
-//
-//     let sum = add(x, y);
-//
-//     assert_eq!(sum, 20);
-//     assert_eq!(a, 10);
-// }
-//
-// // Let's look at a similar function, but with references passed as arguments instead
-// // of values themselves. Lifetimes will need to be made explicit sometimes when passing
-// // around references. Because this max() function returns a reference, we must explicitly
-// // declare the lifetime of that reference.
-// #[test]
-// fn explicit_lifetime() {
-//     let x = 10;
-//     let y = 20;
-//
-//     fn max<'a>(a: &'a i32, b: &'a i32) -> &'a i32 {
-//         if a >= b { a } else { b }
-//     }
-//
-//     let max = max(&x, &y);
-//
-//     assert_eq!(max, 20);
-// }
-// // Here we're saying that the i32 we return will have a lifetime equal to that of the function max
+
+// Now that you've learned a bit about ownership in Rust, it's time to look at borrowing.
+// When a binding "borrows" a value, it creates a reference to that value.
+
+// One way to denote a reference to a value in Rust is using the & operator.
+#[test]
+fn simple_borrowing() {
+    let name = String::from("Chris");
+    let first_name = &name;
+    assert_eq!(name, "Chris".to_string());
+    assert_eq!(first_name, &"Chris".to_string());
+}
+// Unlike our earlier example, name has not been deallocated,
+// because first_name has created a reference to it.
+
+// By default, references will be immutable unless you explicitly made mutable.
+#[test]
+fn mutable_borrowing() {
+    let mut count = 10;
+    {
+        let new_count = &mut count;
+        *new_count += 1;
+        assert_eq!(new_count, &11);
+    }
+    assert_eq!(count, 11);
+}
+
+// Borrowing can also be used to pass values through functions without needing to rebind them.
+#[test]
+fn borrowing_through_functions() {
+    let mut vector = vec![1, 2, 3];
+
+    fn insert_next_number(v: &mut Vec<i32>) {
+        let x = v.last().unwrap() + 1;
+        v.push(x);
+    }
+
+    insert_next_number(&mut vector);
+
+    assert_eq!(vector, vec![1, 2, 3, 4]);
+}
+
+// Up until now, we've talked about things being cleaned up or deallocated,
+// but we've avoided discussing lifetimes explicitly. That's because in most cases,
+// Rust takes care of lifetimes for us.
+#[test]
+fn implicit_lifetime() {
+    let x = 10;
+    let y = 10;
+
+    fn add(a: i32, b: i32) -> i32 {
+        assert_eq!(a, 10);
+        a + b
+    }
+
+    let sum = add(x, y);
+
+    assert_eq!(sum, 20);
+}
+
+// Let's look at a similar function, but with references passed as arguments instead
+// of values themselves. Lifetimes will need to be made explicit sometimes when passing
+// around references. Because this max() function returns a reference, we must explicitly
+// declare the lifetime of that reference.
+#[test]
+fn explicit_lifetime() {
+    let x = 10;
+    let y = 20;
+
+    fn max<'l>(a: &'l i32, b: &'l i32) -> &'l i32 {
+        if a >= b { a } else { b }
+    }
+
+    let max = max(&x, &y);
+
+    assert_eq!(max, &20);
+    assert_eq!(*max, 20);
+}
+// Here we're saying that the i32 we return will have a lifetime equal to that of the function max
