@@ -31,37 +31,38 @@ fn owning_a_value_2() {
 fn moving_a_value() {
     let name = String::from("Chris");
     let first_name = name;
-    assert_eq!(name, "Chris".to_string());
+    assert_eq!(first_name, "Chris".to_string());
 }
 
-// // Some confusion can arise with moving values, because certain data types aren't moved.
-// // Primitive types like &'static str are copied rather than being moved,
-// // which means ownership doesn't end.
-// #[test]
-// fn copying_a_value() {
-//     let name = "Chris";
-//     let first_name = name;
-//     assert_eq!(name, __);
-// }
-//
-// // The same will happen with integer types like i32. These types contain no pointers to other data.
-// // Its value is entirely self-contained and can be safely copied.
-// #[test]
-// fn copying_a_value_2() {
-//     let num: i32 = 12;
-//     let x = num;
-//     assert_eq!(x, __);
-// }
-//
-// // Now that we've explored the difference between what types get moved and what types get copied,
-// // let's try an example with a Vec. Because the Vec contains pointers to other data,
-// // it can't be copied. This means that like the String up above, it will be moved.
-// #[test]
-// fn rebinding_a_vec() {
-//     let list = vec!["Rust", "Go", "C++"];
-//     let languages = list;
-//     assert_eq!(list[0], "Rust");
-// }
+// Some confusion can arise with moving values, because certain data types aren't moved.
+// Primitive types like &'static str are copied rather than being moved,
+// which means ownership doesn't end.
+#[test]
+fn copying_a_value() {
+    let name = "Chris";
+    let first_name = name;
+    assert_eq!(first_name, "Chris");
+}
+
+// The same will happen with integer types like i32. These types contain no pointers to other data.
+// Its value is entirely self-contained and can be safely copied.
+#[test]
+fn copying_a_value_2() {
+    let mut num: i32 = 12;
+    let x = num;
+    num = 42;
+    assert_eq!(x, 12);
+}
+
+// Now that we've explored the difference between what types get moved and what types get copied,
+// let's try an example with a Vec. Because the Vec contains pointers to other data,
+// it can't be copied. This means that like the String up above, it will be moved.
+#[test]
+fn rebinding_a_vec() {
+    let list = vec!["Rust", "Go", "C++"];
+    let languages = list;
+    assert_eq!(list[0], "Rust");
+}
 //
 // // Now that you've learned a bit about ownership in Rust, it's time to look at borrowing.
 // // When a binding "borrows" a value, it creates a reference to that value.
