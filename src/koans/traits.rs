@@ -84,6 +84,16 @@ fn creating_traits() {
 
     asserts(num_one, num_two);
 }
+trait IsEvenOrOdd {
+    fn is_even(&self) -> bool;
+}
+
+impl IsEvenOrOdd for u16 {
+    fn is_even(&self) -> bool {
+        self % 2 != 0
+    }
+}
+
 
 // We can also add trait constraints, or "bounds", to structs that we create.
 // Using this pattern, we can use generic types and still ensure type safety.
