@@ -15,16 +15,15 @@ fn implementing_traits() {
         fn full_name(&self) -> String;
     }
 
-    impl Person {
-        fn full_name(&self) -> String {
-            format!("{} {}", self.first_name, self.last_name)
-        }
-    }
-
     let person = Person {
         first_name: "Chris",
         last_name: "Cerami",
     };
+    impl HasName for Person {
+        fn full_name(&self) -> String {
+            format!("{} {}", self.first_name, self.last_name)
+        }
+    }
 
     // The assert_full_name function needs to know that its argument can call
     // full_name(). In order to guarantee this, it is cast to receive any
@@ -57,6 +56,10 @@ fn implementing_traits2() {
             self.level += 1;
             self.level
         }
+
+        fn print_level(&self) {
+            println!("{}", self.level)
+        }
     }
 
     let mut durz = Character {
@@ -84,13 +87,14 @@ fn creating_traits() {
 
     asserts(num_one, num_two);
 }
+
 trait IsEvenOrOdd {
     fn is_even(&self) -> bool;
 }
 
 impl IsEvenOrOdd for u16 {
     fn is_even(&self) -> bool {
-        self % 2 != 0
+        self % 2 == 0
     }
 }
 
@@ -104,7 +108,7 @@ fn trait_constraints_on_structs() {
         latest_version: T,
     }
 
-    impl<__> Language<T> {
+    impl<T: PartialOrd> Language<T> {
         fn is_stable(&self) -> bool {
             self.latest_version >= self.stable_version
         }
@@ -135,7 +139,7 @@ fn where_clause() {
         }
     }
 
-    fn asserts<T>(x: T, y: T) {
+    fn asserts<T>(x: T, y: T) where T: IsEvenOrOdd {
         assert!(!x.is_even());
         assert!(y.is_even());
     }
@@ -153,7 +157,7 @@ fn default_functions() {
     trait IsEvenOrOdd {
         fn is_even(&self) -> bool;
         fn is_odd(&self) -> bool {
-            __
+            !self.is_even()
         }
     }
 
@@ -186,7 +190,7 @@ fn inheritance() {
 
     impl<T: PartialOrd> PartialOrd for Bawks<T> {
         fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
-            __
+            self.thingy.partial_cmp(&other.thingy)
         }
     }
 
